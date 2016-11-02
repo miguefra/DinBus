@@ -1,6 +1,5 @@
 package autobusDinamico;
 
-import com.google.maps.DistanceMatrixApi;
 import com.teamdev.jxbrowser.chromium.Browser;
 import com.teamdev.jxbrowser.chromium.swing.BrowserView;
  
@@ -14,53 +13,7 @@ public class Main {
 	public static final int MAX_ZOOM = 21;
 	private static int zoomValue = 15;
     
-    static double calcularDistancias(Coordenadas destino1, Coordenadas ubicacion1) {
-    	int x = 0; // LLamar api google
-    	//DistanceMatrixApi.getDistanceMatrix(context, origins, destinations);
-    	//https://maps.googleapis.com/maps/api/distancematrix/json?origins=Vancouver+BC|Seattle&destinations=San+Francisco|Victoria+BC&mode=bicycling&language=fr-FR&key=YOUR_API_KEY
 
-    	
-    	return x;
-    }
-
-    static Autobus decidirAutobus(Autobus bus1, Autobus bus2, Usuario usu, int i) {
-    	double diferencia1, diferencia2 = 0;
-    	double distanciaOriginalBus1 = calcularDistancias(bus1.getDestinoActual(), bus1.getUbicacionActual());
-    	double distanciaOriginalBus2 = calcularDistancias(bus2.getDestinoActual(), bus2.getUbicacionActual());
-    	double distanciaBus1Usuario = calcularDistancias(usu.getOrigen(), bus1.getUbicacionActual());  // Cogemos el origen del usuario, pero lo tenemos que establecer antes
-    	double distanciaBus2Usuario = calcularDistancias(usu.getOrigen(), bus2.getUbicacionActual());
-    	
-    	double distanciaNuevaBus1 = calcularDistancias(usu.getDestino(), bus1.getUbicacionActual());
-    	double distanciaNuevaBus2 = calcularDistancias(usu.getDestino(), bus2.getUbicacionActual());
-
-    	diferencia1 = distanciaOriginalBus1 - (distanciaBus1Usuario + distanciaNuevaBus1);
-    	diferencia2 = distanciaOriginalBus2 - (distanciaBus2Usuario + distanciaNuevaBus2);
-    	
-    	if (Math.abs(diferencia1) < Math.abs(diferencia2)) {
-    		System.out.println("BUS 1");
-    		return bus1; // Falta comprobar si est· mas alejado del destino actual
-    	}
-    	else {
-    		System.out.println("BUS 2");
-    		return bus2;
-    	}
-    }
-	
-    public static void algorithm() {
-    	int numBuses = 2;
-    	Autobus bus1, bus2;
-    	Autobus autobuses[] = new Autobus[numBuses];    	
-    	bus1 = new Autobus(autobuses, new Coordenadas(5,5), new Coordenadas(5,5));
-    	bus2 = new Autobus(autobuses, new Coordenadas(5,5), new Coordenadas(5,5));
-    	Usuario usu = new Usuario(new Coordenadas(0,0),new Coordenadas(10,10));
-    	
-    	for (int j = 0; j < autobuses.length; j++) {
-
-    		decidirAutobus(bus1, bus2, usu, j).addParada(j, usu.getOrigen()); // La parada no es exactamente donde est· el usuario, podemos hacerle andar.
-
-    	}
-
-    }
 	 
     public static void main(String[] args) {  // Visualización Swing del mapa.
         final Browser browser = new Browser();
@@ -124,7 +77,13 @@ public class Main {
         frame.setVisible(true);
  
         browser.loadURL("file:///Users/naxo_guerra/Documents/workspace/autobusDinamico/src/autobusDinamico/maps.html");
-        algorithm();
+        Algoritmo algorithm = new Algoritmo();
+        try {
+			algorithm.main(args);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
     }
     
 }
