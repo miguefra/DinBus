@@ -2,6 +2,7 @@ package autobusDinamico;
 
 public class Autobus {
 
+	private int id;
 	private Coordenadas paradas[];
 	private Usuario usuarios[];
 	private Coordenadas destinoActual;
@@ -40,11 +41,18 @@ public class Autobus {
 		this.paradas[i] = parada;
 	}
 	
-    public Autobus(Autobus autobuses[], Coordenadas ubicacion, Coordenadas destino) {
+    public Autobus(Autobus autobuses[], Coordenadas ubicacion, Coordenadas destino, int id) {
     	this.setParadas(new Coordenadas[100]);
     	this.setUsuarios(new Usuario[100]);
     	this.setDestinoActual(destino);
     	this.setUbicacionActual(ubicacion);
+    	this.id = id;
     	autobuses[autobuses.length - 1] = this;
     }
+	@Override
+	public String toString() {
+		return "Autobus [id=" + id + "]";
+	}
+    
+    
 }
