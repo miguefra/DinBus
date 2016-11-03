@@ -101,8 +101,7 @@ public class Main {
         
         //browser.loadURL("http://maps.google.es");
  
-        browser.loadURL("file:///Users/naxo_guerra/Documents/workspace/autobusDinamico/src/autobusDinamico/maps.html");
-
+        browser.loadURL("file:///C:/Users/Miguel/Documents/DinBus/BusTFG/autobusDinamico/resources/maps.html");
 		
     }
     
