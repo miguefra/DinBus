@@ -21,6 +21,7 @@ public class Main {
 		bustemp = algorithm.algorithm();
         System.out.println(bustemp);
     	
+    	final Browser browser = new Browser();  // Creamos un "navegador" de la librería jxbrowser para poder visualizar el mapa
         
         JButton zoomInButton = new JButton("Acercar");
         zoomInButton.addActionListener(new ActionListener() {
