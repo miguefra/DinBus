@@ -11,27 +11,41 @@ import com.google.gson.*;
 
 public class Algoritmo {
 	
-	  private static final String API_KEY = "AIzaSyDqoXN6gR5nSYywRJ720kmte-505TUf9FY";
+	private static final String API_KEY = "AIzaSyDqoXN6gR5nSYywRJ720kmte-505TUf9FY";
 
 	public Algoritmo() {
 		super();
 	}
 
 	public static void main(String[] args) throws InterruptedException {
-	    GeoApiContext context = new GeoApiContext();
+		GeoApiContext context = new GeoApiContext();
 	    context.setApiKey(API_KEY);
 	    DistanceMatrixApiRequest req = DistanceMatrixApi.getDistanceMatrix(context,
-	    new String[]{"ciudad universitaria madrid"},
+	    new String[]{"ciudad universitaria"},
 	    new String[]{"calle alcala 328 madrid"});
 
 	    final CountDownLatch latch = new CountDownLatch(1);
 	    req.setCallback(new PendingResult.Callback<DistanceMatrix>() {
 	      @Override
 	      public void onResult(DistanceMatrix result) {
+	  	    boolean found = false;
+		    String[] json;
+		    int tiempo;
+		    int i = 0;
+		    String test = "\"inSeconds\":";
 	        Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	        String userjson = gson.toJson(result);
 	        System.out.println(userjson);
-	        
+        	json = userjson.split(" ");
+
+	        while(!found){
+	        	if (json[i].equals(test)) {
+	        		found = true;
+	        		tiempo = Integer.parseInt(json[i+1].split(",")[0]);
+	        		System.out.println(tiempo);
+	        	}
+	        	i++;
+	        }
 	      }
 
 	      @Override
